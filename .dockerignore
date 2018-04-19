@@ -1,0 +1,9 @@
+_build
+.build
+*.native
+.git
+
+# editors
+.DS_Store
+*.swp
+*~

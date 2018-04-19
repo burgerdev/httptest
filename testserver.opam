@@ -1,0 +1,14 @@
+opam-version: "1.2"
+name: "mapper"
+version: "0.1"
+maintainer: "Markus Rudy <webmaster@burgerdev.de>"
+authors: ["Markus Rudy <webmaster@burgerdev.de>"]
+homepage: "https://github.com/burgerdev/ocaml-testserver"
+doc: "https://io.burgerdev.de/docs/ocaml-testserver"
+bug-reports: "https://github.com/burgerdev/ocaml-testserver/issues"
+dev-repo: "https://github.com/burgerdev/ocaml-testserver.git"
+license: "GPLv3"
+build: [["jbuilder" "build" "-p" name "-j" jobs]]
+depends: [
+]
+available: [ocaml-version >= "4.06.0"]

@@ -1,0 +1,21 @@
+(jbuild_version 1)
+
+(executables
+ ((names (main))
+  (link_flags (:include link_flags))
+  (libraries (testserver
+              cohttp.lwt
+              lwt lwt.unix
+              cmdliner unix
+              fmt fmt.cli fmt.tty
+              logs logs.cli logs.fmt
+             )
+  )
+ )
+)
+
+
+(install
+ ((section bin)
+  (files ((main.exe as testserver))))
+)

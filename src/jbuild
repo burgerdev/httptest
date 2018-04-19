@@ -1,0 +1,15 @@
+(jbuild_version 1)
+
+(library
+ ((name testserver)
+  (public_name testserver)
+
+  (libraries (cohttp.lwt
+              lwt lwt.unix
+              cmdliner unix
+              fmt fmt.cli fmt.tty
+              logs logs.cli logs.fmt
+             )
+  )
+ )
+)
