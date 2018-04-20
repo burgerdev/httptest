@@ -1,3 +1,4 @@
+open Lwt
 open Cohttp_lwt_unix
 
 open Testserver
@@ -6,11 +7,12 @@ let bin_name = "test-server"
 let bin_version = "0.1"
 
 let mux = function
-  | "/echo" -> Some Testserver.cohttp_example_server
+  | "/echo" -> Some Testserver.echo
+  | "/example" -> Some Testserver.cohttp_example_server
   | _ -> None
 
 let server src port =
-  Lwt.bind (Conduit_lwt_unix.init ~src ()) @@ fun ctx ->
+  Conduit_lwt_unix.init ~src () >>= fun ctx ->
   let ctx = Cohttp_lwt_unix.Client.custom_ctx ~ctx () in
   let callback = Testserver.mux_path mux in
   let handler = Server.make ~callback () in
