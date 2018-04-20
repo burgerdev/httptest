@@ -4,19 +4,22 @@ open Cohttp_lwt_unix
 open Testserver
 
 let bin_name = "test-server"
-let bin_version = "0.1"
+let version = "0.1"
 
 let mux = function
   | "/echo" -> Some Testserver.echo
   | "/example" -> Some Testserver.cohttp_example_server
+  | "/healthz" -> Some Testserver.health
   | _ -> None
 
 let server src port =
-  Conduit_lwt_unix.init ~src () >>= fun ctx ->
-  let ctx = Cohttp_lwt_unix.Client.custom_ctx ~ctx () in
   let callback = Testserver.mux_path mux in
-  let handler = Server.make ~callback () in
-  Server.create ~ctx ~mode:(`TCP (`Port port)) handler
+  let spec = Server.make ~callback () in
+  let mode = (`TCP (`Port port)) in
+
+  Conduit_lwt_unix.init ~src () >>= fun ctx ->
+  let ctx = Cohttp_lwt_unix.Net.init ~ctx () in
+  Server.create ~ctx ~mode spec
 
 let main host port _ =
   Lwt_main.run @@ server host port
@@ -54,6 +57,6 @@ let main_term = Term.(const main
 
 let info =
   let doc = "HTTP test server" in
-  Term.info bin_name ~version:bin_version ~doc
+  Term.info bin_name ~version ~doc
 
-let () = match Term.eval (main_term, info) with `Error _ -> exit 1 | _ -> exit 0
+let () = Term.exit @@ Term.eval (main_term, info)
