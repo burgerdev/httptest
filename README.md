@@ -4,8 +4,10 @@ Test your HTTP requests.
 
 Available endpoints:
 
-- `/echo`: cohttp's example server
-- all others: 404
+- `/example`: cohttp's example server
+- `/echo`: alternative echo server
+- `/healthz`: returns 200
+- all others: returns 404
 
 ## Copyright
 
