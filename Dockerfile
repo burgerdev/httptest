@@ -10,13 +10,10 @@ RUN cd repo && echo "(-cclib -static)" >bin/link_flags && \
 
 FROM scratch
 
-COPY --from=build /home/opam/repo/_build/default/bin/main.exe \
-    /home/opam/repo/*LICENSE \
-    /
+COPY --from=build /home/opam/repo/_build/default/bin/main.exe /test-server
 
 USER 1
 
 EXPOSE 8080
 
-ENTRYPOINT ["/main.exe"]
-CMD ["--bind", "0.0.0.0"]
+ENTRYPOINT ["/test-server", "--bind", "0.0.0.0"]
