@@ -8,4 +8,7 @@ serve: build
 docker:
 	docker build -t burgerdev/testserver:latest .
 
-.PHONY: build serve
+docker-serve: docker
+	docker run -it --rm -p 8080:8080 burgerdev/testserver:latest
+
+.PHONY: build serve docker docker-serve
