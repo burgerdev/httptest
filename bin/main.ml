@@ -22,7 +22,11 @@ let server src port =
   Server.create ~ctx ~mode spec
 
 let main host port _ =
-  Lwt_main.run @@ server host port
+  let lwt = server host port in
+  let handle_sig _ = cancel lwt in
+  Sys.(set_signal sigint (Signal_handle handle_sig));
+  Sys.(set_signal sigterm (Signal_handle handle_sig));
+  Lwt_main.run lwt
 
 (* Logging stuff, copy pasta from docs *)
 
