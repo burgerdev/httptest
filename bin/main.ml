@@ -10,6 +10,7 @@ let mux = function
   | "/echo" -> Some Testserver.echo
   | "/example" -> Some Testserver.cohttp_example_server
   | "/healthz" -> Some Testserver.health
+  | "/size" -> Some Testserver.body_size
   | _ -> None
 
 let server src port =

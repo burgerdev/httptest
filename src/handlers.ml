@@ -28,3 +28,8 @@ let echo _conn req body =
       (Printf.sprintf "%s %s %s\n%s\n%s"
          meth path version headers body))
   >>= (fun body -> Server.respond_string ~status:`OK ~body ())
+
+let body_size _conn req body =
+  Cohttp_lwt.Body.length body >>= fun (num_bytes, _) ->
+  let body = Printf.sprintf "%LdB\n" num_bytes in
+  Server.respond_string ~status:`OK ~body ()
